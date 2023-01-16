@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="tblStudentInfoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Student_Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Course" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblStudentInfo">
+          <Key>
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="StudentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="studentName" Type="nvarchar" MaxLength="50" />
+          <Property Name="studentMobile" Type="nchar" MaxLength="10" />
+          <Property Name="studentAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="studentDept" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_tblStudentInfo_Student_Course">
+          <End Role="Student_Course" Type="Self.Student_Course" Multiplicity="1" />
+          <End Role="tblStudentInfo" Type="Self.tblStudentInfo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Student_Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblStudentInfo">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="tblStudentInfoModelStoreContainer">
+          <EntitySet Name="Student_Course" EntityType="Self.Student_Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStudentInfo" EntityType="Self.tblStudentInfo" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblStudentInfo_Student_Course" Association="Self.FK_tblStudentInfo_Student_Course">
+            <End Role="Student_Course" EntitySet="Student_Course" />
+            <End Role="tblStudentInfo" EntitySet="tblStudentInfo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="tblStudentInfoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Student_Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Course" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblStudentInfo" Relationship="Self.FK_tblStudentInfo_Student_Course" FromRole="Student_Course" ToRole="tblStudentInfo" />
+        </EntityType>
+        <EntityType Name="tblStudentInfo">
+          <Key>
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="StudentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="studentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="studentMobile" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="studentAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="studentDept" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Student_Course" Relationship="Self.FK_tblStudentInfo_Student_Course" FromRole="tblStudentInfo" ToRole="Student_Course" />
+        </EntityType>
+        <Association Name="FK_tblStudentInfo_Student_Course">
+          <End Role="Student_Course" Type="Self.Student_Course" Multiplicity="1" />
+          <End Role="tblStudentInfo" Type="Self.tblStudentInfo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Student_Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblStudentInfo">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="tblStudentInfoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Student_Course" EntityType="Self.Student_Course" />
+          <EntitySet Name="tblStudentInfoes" EntityType="Self.tblStudentInfo" />
+          <AssociationSet Name="FK_tblStudentInfo_Student_Course" Association="Self.FK_tblStudentInfo_Student_Course">
+            <End Role="Student_Course" EntitySet="Student_Course" />
+            <End Role="tblStudentInfo" EntitySet="tblStudentInfoes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="tblStudentInfoModelStoreContainer" CdmEntityContainer="tblStudentInfoEntities">
+          <EntitySetMapping Name="Student_Course">
+            <EntityTypeMapping TypeName="tblStudentInfoModel.Student_Course">
+              <MappingFragment StoreEntitySet="Student_Course">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Course" ColumnName="Course" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStudentInfoes">
+            <EntityTypeMapping TypeName="tblStudentInfoModel.tblStudentInfo">
+              <MappingFragment StoreEntitySet="tblStudentInfo">
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="studentName" ColumnName="studentName" />
+                <ScalarProperty Name="studentMobile" ColumnName="studentMobile" />
+                <ScalarProperty Name="studentAddress" ColumnName="studentAddress" />
+                <ScalarProperty Name="studentDept" ColumnName="studentDept" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

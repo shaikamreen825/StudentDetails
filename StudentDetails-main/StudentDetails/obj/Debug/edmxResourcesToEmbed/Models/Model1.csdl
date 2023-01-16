@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="tblStudentInfoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Student_Course">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Course" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblStudentInfo" Relationship="Self.FK_tblStudentInfo_Student_Course" FromRole="Student_Course" ToRole="tblStudentInfo" />
+  </EntityType>
+  <EntityType Name="tblStudentInfo">
+    <Key>
+      <PropertyRef Name="StudentId" />
+    </Key>
+    <Property Name="StudentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="studentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="studentMobile" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="studentAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="studentDept" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Student_Course" Relationship="Self.FK_tblStudentInfo_Student_Course" FromRole="tblStudentInfo" ToRole="Student_Course" />
+  </EntityType>
+  <Association Name="FK_tblStudentInfo_Student_Course">
+    <End Role="Student_Course" Type="Self.Student_Course" Multiplicity="1" />
+    <End Role="tblStudentInfo" Type="Self.tblStudentInfo" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Student_Course">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblStudentInfo">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="tblStudentInfoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Student_Course" EntityType="Self.Student_Course" />
+    <EntitySet Name="tblStudentInfoes" EntityType="Self.tblStudentInfo" />
+    <AssociationSet Name="FK_tblStudentInfo_Student_Course" Association="Self.FK_tblStudentInfo_Student_Course">
+      <End Role="Student_Course" EntitySet="Student_Course" />
+      <End Role="tblStudentInfo" EntitySet="tblStudentInfoes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

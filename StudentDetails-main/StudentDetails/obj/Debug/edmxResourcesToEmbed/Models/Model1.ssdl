@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="tblStudentInfoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Student_Course">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Course" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tblStudentInfo">
+    <Key>
+      <PropertyRef Name="StudentId" />
+    </Key>
+    <Property Name="StudentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="studentName" Type="nvarchar" MaxLength="50" />
+    <Property Name="studentMobile" Type="nchar" MaxLength="10" />
+    <Property Name="studentAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="studentDept" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_tblStudentInfo_Student_Course">
+    <End Role="Student_Course" Type="Self.Student_Course" Multiplicity="1" />
+    <End Role="tblStudentInfo" Type="Self.tblStudentInfo" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Student_Course">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblStudentInfo">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="tblStudentInfoModelStoreContainer">
+    <EntitySet Name="Student_Course" EntityType="Self.Student_Course" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblStudentInfo" EntityType="Self.tblStudentInfo" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tblStudentInfo_Student_Course" Association="Self.FK_tblStudentInfo_Student_Course">
+      <End Role="Student_Course" EntitySet="Student_Course" />
+      <End Role="tblStudentInfo" EntitySet="tblStudentInfo" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
